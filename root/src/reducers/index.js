@@ -1,9 +1,9 @@
-import { ADD_MOVIES, SET_FILTER, SEARCH_MOVIE } from '../actions/index.js'
+import { ADD_MOVIES, SET_FILTER } from '../actions/index.js'
 import {
   movieListAsMap,
-  // getAllIds,
-  // getLeastValuedIds,
-  // getMostValuedIds
+  getAllIds,
+  getLeastValuedIds,
+  getMostValuedIds
 } from '../normalize.js'
 
 // function filterByTitle(title, movies) {
@@ -45,27 +45,18 @@ const reducer = (state, { type, payload }) => {
           ...state.list,
           all,
           leastValued,
-          mostValued,
+          mostValued
         }
       }
     }
     case SET_FILTER:
-      return {
-        ...state,
-        filter: payload,
-      }
+      return 
     case SEARCH_MOVIE:
-      return {
-        ...state,
-        filter: 'search',
-        list: {
-          ...state.list,
-          search: searchMovie(payload, state.movieList, state.list.all)
-        }
-      }
+      return 
     default:
       return state
-  }
+  
+}
 }
 
 export default reducer

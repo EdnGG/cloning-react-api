@@ -3,7 +3,8 @@ import styled from '../lib/styled-components.js'
 import Wrapper from './wrapper.js'
 import Movie from './movie.js'
 import store from '../store.js'
-// import movies from '../movies.js'
+import api from '../api.js'
+import { ADD_MOVIES } from '../actions/index.js'
 
 
 const MovieListStyled = styled.section`
@@ -18,8 +19,23 @@ const MovieListStyled = styled.section`
 
 class MovieList extends Component {
   state = {
-    movies: store.getState().movieList,
+    // movies: store.getState().movieList,
+    page: 1
+  }
 
+  getPage = async (page) => {
+    const { results } = await api.moviePage(20)
+    store.dispatch({
+      type: ADD_MOVIES,
+      payload: results
+    })
+  }
+  componentDidMount() {
+    // this.getPage(this.state.page)
+    store.subscribe(()=> {
+      console.log('already update')
+      this.setState()
+    })
   }
 
   render() {

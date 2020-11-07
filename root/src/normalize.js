@@ -1,26 +1,41 @@
-// import rawMoviesList from './movies.js'
-
-function movieListAsMap (newList, movie){
+function movieListAsMap (newList, oldList = new Map()){
   return newList.reduce((list, movie) => { 
     list.set(movie.id, movie)
     return list
-  }, new Map())
+  }, oldList)
 } 
 
-
-function getAllIds(list){
-  return list.map(movie => movie.id)
+function getAllIds(list, oldList = []){
+  return oldList.concat(list.map(movie => movie.id))
 }
-// console.log(movieList) 
 
-function getLeastValuedIds (list) {
+function getLeastValuedIds (list, oldList = []) {
   return list.reduce((list, movie) => {
     if(movie.vote_average <= 7){
       list.push(movie.id)
     }
     return list
-  }, [])
+  }, oldList)
 }
+
+function getMostValuedIds(list, oldList = []){
+  return list.reduce((list, movie) => {
+    if(movie.vote_average > 7){
+      list.push(movie.id)
+    }
+    return list
+  }, oldList)
+}
+
+export {
+  movieListAsMap,
+  getAllIds,
+  getMostValuedIds,
+  getLeastValuedIds,
+}
+
+
+
 
 /* 
 Teniendo esta funcion en cuenta, usando el metofdo reduce:
@@ -39,17 +54,7 @@ list es el array []
 
 // // console.log(all)
 
-function getMostValuedIds(list){
-  return list.reduce((list, movie) => {
-    if(movie.vote_average > 7){
-      list.push(movie.id)
-    }
-    return list
-  }, [])
 
-
-
-}
 
 
 // console.log(popular)
@@ -93,11 +98,3 @@ console.log(indexed)
 console.log(indexed['patricia'])
 */ 
 
-export {
-  movieListAsMap,
-  getAllIds,
-  getMostValuedIds,
-  getLeastValuedIds,
-  
-  
-}
