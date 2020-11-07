@@ -6,12 +6,13 @@ import Search from './search.js'
 import Filters from './filters.js'
 import MovieList from './movie-list.js'
 
+
 const AppStyled = styled.div``
 
 class App extends Component {
   render() {
     return AppStyled({
-      children: [
+      children: [ 
         new Header(),
         new Actions({
           children: [

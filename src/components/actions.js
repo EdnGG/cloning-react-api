@@ -10,7 +10,8 @@ class Actions extends Component {
         children,
       })
     })
+    
   }
 }
 
-export default Actions
+export default Actions 
