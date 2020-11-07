@@ -1,4 +1,4 @@
-import { ADD_MOVIES, SET_FILTER } from '../actions/index.js'
+import { ADD_MOVIES, SET_FILTER, SEARCH_MOVIE } from '../actions/index.js'
 import {
   movieListAsMap,
   getAllIds,
@@ -6,30 +6,30 @@ import {
   getMostValuedIds
 } from '../normalize.js'
 
-// function filterByTitle(title, movies) {
-//   const list = []
-//   movies.forEach((movie) => {
-//     if (movie.title.toLowerCase().includes(title.toLowerCase())) {
-//       list.push(movie.id)
-//     }
-//   })
-//   return list
-// }
+function filterByTitle(title, movies) {
+  const list = []
+  movies.forEach((movie) => {
+    if (movie.title.toLowerCase().includes(title.toLowerCase())) {
+      list.push(movie.id)
+    }
+  })
+  return list
+}
 
-// function findById(id, allIds) {
-//   const parseId = parseInt(id, 10)
-//   if (allIds.includes(parseId)) {
-//     return [parseId]
-//   }
-//   return allIds
-// }
+function findById(id, allIds) {
+  const parseId = parseInt(id, 10)
+  if (allIds.includes(parseId)) {
+    return [parseId]
+  }
+  return allIds
+}
 
-// function searchMovie(query, list, allIds) {
-//   if (isNaN(query)) {
-//     return filterByTitle(query, list)
-//   }
-//   return findById(query, allIds)
-// }
+function searchMovie(query, list, allIds) {
+  if (isNaN(query)) {
+    return filterByTitle(query, list)
+  }
+  return findById(query, allIds)
+}
 
 const reducer = (state, { type, payload }) => {
   switch (type) {
@@ -50,9 +50,20 @@ const reducer = (state, { type, payload }) => {
       }
     }
     case SET_FILTER:
-      return 
+      return {
+        ...state,
+        filter: payload
+
+      }
     case SEARCH_MOVIE:
-      return 
+      return {
+        ...state,
+        filter: 'search',
+        list: {
+          ...state.list,
+          search: searchMovie(payload, state.movieList, state.list.all)
+        }
+      }
     default:
       return state
   

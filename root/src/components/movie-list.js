@@ -19,23 +19,31 @@ const MovieListStyled = styled.section`
 
 class MovieList extends Component {
   state = {
-    // movies: store.getState().movieList,
     page: 1
   }
-
   getPage = async (page) => {
-    const { results } = await api.moviePage(20)
+    const { results } = await api.moviePage(page)
     store.dispatch({
       type: ADD_MOVIES,
-      payload: results
+      payload: results,
     })
+  }
+  handleIntersection = (entries) => {
+    if (entries[0].isIntersecting){
+      this.getPage(this.state.page)
+      this.setState({
+        page: this.state.page + 1
+      })
+      console.log('bring new page')
+    }
   }
   componentDidMount() {
     // this.getPage(this.state.page)
     store.subscribe(()=> {
-      console.log('already update')
       this.setState()
     })
+    const observer = new IntersectionObserver(this.handleIntersection)
+    observer.observe(window.intersector)
   }
 
   render() {
